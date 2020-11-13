@@ -1,0 +1,15 @@
+{
+    "name": "jeroenvanrensen/moonphp",
+    "description": "An admin panel for Laravel.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeroen van Rensen",
+            "email": "jmjrensen@jcjcj.nl",
+            "homepage": "https://www.jeroenvanrensen.nl/",
+            "role": "Developer"
+        }
+    ],
+    "require": {}
+}
