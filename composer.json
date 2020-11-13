@@ -16,5 +16,8 @@
         "psr-4": {
             "JeroenvanRensen\\MoonPHP\\": "src"
         }
+    },
+    "require-dev": {
+        "orchestra/testbench": "6.0"
     }
 }
