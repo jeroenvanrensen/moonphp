@@ -19,11 +19,11 @@
         </include>
     </coverage>
     <testsuites>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
+        <testsuite name="Console">
+            <directory suffix="Test.php">./tests/Console</directory>
         </testsuite>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
+        <testsuite name="Models">
+            <directory suffix="Test.php">./tests/Models</directory>
         </testsuite>
     </testsuites>
     <php>
