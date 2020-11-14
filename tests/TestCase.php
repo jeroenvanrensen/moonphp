@@ -20,6 +20,10 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function getEnvironmentSetUp($app)
     {
-        // 
+        // import the CreateMoonUsersTable class from the migration
+        include_once __DIR__ . '/../database/migrations/create_moon_users_table.php';
+
+        // run the up() method of that migration class
+        (new \CreateMoonUsersTable)->up();
     }
 }

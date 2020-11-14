@@ -14,7 +14,8 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "JeroenvanRensen\\MoonPHP\\": "src"
+            "JeroenvanRensen\\MoonPHP\\": "src",
+            "JeroenvanRensen\\MoonPHP\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
