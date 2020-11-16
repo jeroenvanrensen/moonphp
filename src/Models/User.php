@@ -2,13 +2,15 @@
 
 namespace JeroenvanRensen\MoonPHP\Models;
 
+use Illuminate\Auth\Authenticatable as AuthenticableTrait;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use JeroenvanRensen\MoonPHP\Database\Factories\UserFactory;
 
-class User extends Model
+class User extends Model implements Authenticatable
 {
-    use HasFactory;
+    use HasFactory, AuthenticableTrait;
 
     /**
      * The table associated with the model.
@@ -22,8 +24,17 @@ class User extends Model
      *
      * @var array
      */
-    public $fillable = [
+    protected $fillable = [
         'name', 'email', 'password'
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token'
     ];
 
     /**
