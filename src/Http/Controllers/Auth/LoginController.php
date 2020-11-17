@@ -22,7 +22,7 @@ class LoginController
     public function store()
     {
         if (auth()->guard('moon')->attempt(request(['email', 'password']), true)) {
-            return redirect('/admin');
+            return redirect()->route('moon.dashboard');
         }
 
         return redirect()->route('moon.auth.login')

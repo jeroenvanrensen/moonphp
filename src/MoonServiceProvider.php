@@ -2,6 +2,7 @@
 
 namespace JeroenvanRensen\MoonPHP;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
@@ -29,7 +30,7 @@ class MoonServiceProvider extends ServiceProvider
         ]);
 
         // Load the routes
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        $this->registerRoutes();
 
         // Load the views
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'moon');
@@ -49,5 +50,19 @@ class MoonServiceProvider extends ServiceProvider
         $router = $this->app->make(Router::class);
         $router->aliasMiddleware('moon.guest', GuestMiddleware::class);
         $router->aliasMiddleware('moon.auth', AuthMiddleware::class);
+    }
+
+    /**
+     * Register all the routes.
+     *
+     * @return void
+     */
+    protected function registerRoutes()
+    {
+        Route::middleware('web')
+            ->prefix('/admin')
+            ->group(function() {
+                $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+            });
     }
 }

@@ -18,7 +18,7 @@ class GuestMiddleware
     public function handle(Request $request, Closure $next)
     {
         if(auth()->guard('moon')->check()) {
-            return redirect('/admin');
+            return redirect()->route('moon.dashboard');
         }
 
         return $next($request);

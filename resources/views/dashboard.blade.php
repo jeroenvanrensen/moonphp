@@ -6,7 +6,7 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <form action="/admin/logout" method="post">
+    <form action="{{ route('moon.auth.logout') }}" method="post">
         @csrf
         <button type="submit">Logout</button>
     </form>
