@@ -2,10 +2,10 @@
 
 namespace JeroenvanRensen\MoonPHP;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use JeroenvanRensen\MoonPHP\Console\CreateUserCommand;
 use JeroenvanRensen\MoonPHP\Http\Middleware\AuthMiddleware;
@@ -16,35 +16,37 @@ class MoonServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        // 
     }
 
     public function boot()
     {
-        // Publish the migrations files
-        $this->publishes([
-            __DIR__ . '/../database/migrations/create_moon_users_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_moon_users_table.php')
-        ], 'migrations');
+        // Set the moon guard auth config
+        $this->setAuthConfig();
 
-        // Publish the assets
-        $this->publishes([
-            __DIR__.'/../public/css' => public_path('moonphp/css')
-        ], 'assets');
+        // Publish the migrations and the assets
+        $this->publishFiles();
 
-        // Register blade components
-        Blade::componentNamespace('JeroenvanRensen\\MoonPHP\\Views\\Components', 'moon');
+        // Load all the views and blade components
+        $this->loadViews();
 
-        // Register commands
-        $this->commands([
-            CreateUserCommand::class,
-        ]);
+        // Register the commands
+        $this->registerCommands();
 
-        // Load the routes
+        // Register all the routes
         $this->registerRoutes();
 
-        // Load the views
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'moon');
+        // Register middleware
+        $this->registerMiddleware();
+    }
 
-        // Create a moon guard
+    /**
+     * Set the moon guard auth config.
+     *
+     * @return void
+     */
+    protected function setAuthConfig()
+    {
         Config::set('auth.guards.moon', [
             'driver' => 'session',
             'provider' => 'moon',
@@ -54,15 +56,53 @@ class MoonServiceProvider extends ServiceProvider
             'driver' => 'eloquent',
             'model' => User::class,
         ]);
+    }
 
-        // Register middleware
+    /**
+     * Publish the migrations and the assets.
+     *
+     * @return void
+     */
+    protected function publishFiles()
+    {
+        // Migrations
+        $this->publishes([
+            __DIR__ . '/../database/migrations/create_moon_users_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_moon_users_table.php')
+        ], 'migrations');
+
+        // Assets
+        $this->publishes([
+            __DIR__ . '/../public/css' => public_path('moonphp/css')
+        ], 'assets');
+    }
+
+    /**
+     * Load all the views and blade components.
+     *
+     * @return void
+     */
+    protected function loadViews()
+    {
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'moon');
+
+        Blade::componentNamespace('JeroenvanRensen\\MoonPHP\\Views\\Components', 'moon');
+    }
+
+    /**
+     * Register the middleware.
+     *
+     * @return void
+     */
+    protected function registerMiddleware()
+    {
         $router = $this->app->make(Router::class);
+
         $router->aliasMiddleware('moon.guest', GuestMiddleware::class);
         $router->aliasMiddleware('moon.auth', AuthMiddleware::class);
     }
 
     /**
-     * Register all the routes.
+     * Register the routes.
      *
      * @return void
      */
@@ -70,8 +110,20 @@ class MoonServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->prefix('/admin')
-            ->group(function() {
+            ->group(function () {
                 $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
             });
+    }
+
+    /**
+     * Register the commands.
+     *
+     * @return void
+     */
+    protected function registerCommands()
+    {
+        $this->commands([
+            CreateUserCommand::class,
+        ]);
     }
 }
