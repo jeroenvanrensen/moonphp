@@ -9,12 +9,12 @@
     <link href="{{ asset('moonphp/css/app.css') }}" rel="stylesheet" />
 </head>
 <body class="bg-gray-200">
-    <div class="container mx-auto px-4">
-        <div class="h-screen flex justify-center items-center">
-            <div class="bg-white w-full md:w-4/5 lg:w-1/2 xl:w-2/5 shadow rounded py-8 px-8">
-                @yield('content')
-            </div>
-        </div>
+    <div class="flex">
+        @include('moon::layouts._sidebar')
+
+        <main class="w-5/6">
+            @include('moon::layouts._navbar')
+        </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
