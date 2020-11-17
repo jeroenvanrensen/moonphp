@@ -4,8 +4,14 @@
 
 @section('content')
     <h1 class="mb-4">Login</h1>
+
+    @if(session()->has('error'))
+        <div class="alert alert-danger">Test</div>
+    @endif
     
     <form action="{{ route('moon.auth.login') }}" method="post">
+        @csrf
+
         <!-- Email -->
         <div class="form-group mb-3">
             <label for="email" class="form-label">Email</label>
@@ -16,6 +22,7 @@
                 id="email"
                 class="form-control"
                 value="{{ old('email') }}"
+                required
             />
         </div>
 
@@ -29,6 +36,7 @@
                 id="password"
                 class="form-control"
                 value="{{ old('password') }}"
+                required
             />
         </div>
 

@@ -61,6 +61,33 @@ class LoginTest extends TestCase
             ->assertRedirect(route('moon.dashboard'));
     }
 
+    /** @test */
+    public function a_user_cannot_login_if_the_email_is_incorrect()
+    {
+        $this->withoutExceptionHandling();
+        
+        $this->post(route('moon.auth.login'), [
+            'email' => 'john@example.org', // does not exist
+            'password' => 'password'
+        ])->assertSessionHas('error', 'These credentials do not match our records.');
+    }
+
+    /** @test */
+    public function a_user_cannot_login_if_the_password_is_incorrect()
+    {
+        $this->withoutExceptionHandling();
+
+        User::factory()->create([
+            'email' => 'john@example.org',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' // password
+        ]);
+        
+        $this->post(route('moon.auth.login'), [
+            'email' => 'john@example.org',
+            'password' => 'incorrect-password' // is incorrect
+        ])->assertSessionHas('error', 'These credentials do not match our records.');
+    }
+
     /**
      * Log the user in using the moon guard.
      *

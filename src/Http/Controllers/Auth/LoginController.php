@@ -21,15 +21,11 @@ class LoginController
      */
     public function store()
     {
-        $data = request()->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if (auth()->guard('moon')->attempt($data, true)) {
+        if (auth()->guard('moon')->attempt(request(['email', 'password']), true)) {
             return redirect('/admin');
         }
 
-        return back()->withInput(request()->only('email', 'remember'));
+        return redirect()->route('moon.auth.login')
+            ->with('error', 'These credentials do not match our records.');
     }
 }
