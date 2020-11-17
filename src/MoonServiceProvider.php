@@ -24,7 +24,7 @@ class MoonServiceProvider extends ServiceProvider
         // Set the moon guard auth config
         $this->setAuthConfig();
 
-        // Publish the migrations and the assets
+        // Publish the migrations, config files, and the assets
         $this->publishFiles();
 
         // Load all the views and blade components
@@ -59,7 +59,7 @@ class MoonServiceProvider extends ServiceProvider
     }
 
     /**
-     * Publish the migrations and the assets.
+     * Publish the migrations, config files, and the assets.
      *
      * @return void
      */
@@ -69,6 +69,11 @@ class MoonServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../database/migrations/create_moon_users_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_moon_users_table.php')
         ], 'migrations');
+
+        // Config files
+        $this->publishes([
+            __DIR__ . '/../config/config.php' => config_path('moonphp.php')
+        ], 'config');
 
         // Assets
         $this->publishes([
@@ -109,7 +114,7 @@ class MoonServiceProvider extends ServiceProvider
     protected function registerRoutes()
     {
         Route::middleware('web')
-            ->prefix('/admin')
+            ->prefix(config('moonphp.path'))
             ->group(function () {
                 $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
             });
