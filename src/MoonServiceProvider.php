@@ -4,6 +4,7 @@ namespace JeroenvanRensen\MoonPHP;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use JeroenvanRensen\MoonPHP\Console\CreateUserCommand;
@@ -23,6 +24,11 @@ class MoonServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../database/migrations/create_moon_users_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_moon_users_table.php')
         ], 'migrations');
+
+        // Publish the assets
+        $this->publishes([
+            __DIR__.'/../public/css' => public_path('moonphp/css')
+        ], 'assets');
 
         // Register commands
         $this->commands([

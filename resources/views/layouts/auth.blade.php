@@ -6,17 +6,15 @@
 
     <title>@yield('title') - MoonPHP</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" />
+    <link href="{{ asset('moonphp/css/app.css') }}" rel="stylesheet" />
 </head>
-<body>
-    <div class="container my-5">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
+<body class="bg-gray-200">
+    <div class="container mx-auto px-4">
+        <div class="h-screen flex justify-center items-center">
+            <div class="bg-white w-full md:w-4/5 lg:w-1/2 xl:w-2/5 shadow rounded py-8 px-8">
                 @yield('content')
             </div>
         </div>
     </div>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
