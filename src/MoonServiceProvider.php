@@ -30,6 +30,9 @@ class MoonServiceProvider extends ServiceProvider
             __DIR__.'/../public/css' => public_path('moonphp/css')
         ], 'assets');
 
+        // Register blade components
+        Blade::componentNamespace('JeroenvanRensen\\MoonPHP\\Views\\Components', 'moon');
+
         // Register commands
         $this->commands([
             CreateUserCommand::class,
