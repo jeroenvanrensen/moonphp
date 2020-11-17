@@ -6,7 +6,11 @@
     <h1 class="mb-4">Login</h1>
 
     @if(session()->has('error'))
-        <div class="alert alert-danger">Test</div>
+        <div class="alert alert-danger">{{ session()->get('error') }}</div>
+    @endif
+
+    @if(session()->has('message'))
+        <div class="alert alert-primary">{{ session()->get('message') }}</div>
     @endif
     
     <form action="{{ route('moon.auth.login') }}" method="post">

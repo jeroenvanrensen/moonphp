@@ -6,6 +6,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use JeroenvanRensen\MoonPHP\Console\CreateUserCommand;
+use JeroenvanRensen\MoonPHP\Http\Middleware\AuthMiddleware;
 use JeroenvanRensen\MoonPHP\Http\Middleware\GuestMiddleware;
 use JeroenvanRensen\MoonPHP\Models\User;
 
@@ -47,5 +48,6 @@ class MoonServiceProvider extends ServiceProvider
         // Register middleware
         $router = $this->app->make(Router::class);
         $router->aliasMiddleware('moon.guest', GuestMiddleware::class);
+        $router->aliasMiddleware('moon.auth', AuthMiddleware::class);
     }
 }
