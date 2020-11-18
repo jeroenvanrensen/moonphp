@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-200">
     <div class="flex">
-        @include('moon::layouts._sidebar')
+        <x-moon::sidebar />
 
         <main class="w-5/6">
             @include('moon::layouts._navbar')

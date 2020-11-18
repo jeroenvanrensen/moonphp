@@ -31,6 +31,9 @@
         <testsuite name="Models">
             <directory suffix="Test.php">./tests/Models</directory>
         </testsuite>
+        <testsuite name="Resources">
+            <directory suffix="Test.php">./tests/Resources</directory>
+        </testsuite>
     </testsuites>
     <php>
         <env name="DB_CONNECTION" value="testing"/>

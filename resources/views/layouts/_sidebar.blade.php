@@ -5,11 +5,15 @@
 
     <div class="px-6 py-8 text-gray-200">
         <ul>
-            <li class="font-semibold cursor-pointer">Dashboard</li>
+            <li class="font-semibold cursor-pointer"><a href="{{ route('moon.dashboard') }}" class="outline-none">Dashboard</a></li>
             <li class="text-sm uppercase text-gray-500 font-bold mt-6 tracking-wide">Resources</li>
 
-            @foreach(['Users', 'Posts', 'Pages', 'Categories'] as $resource)
-                <li class="font-semibold cursor-pointer mt-2">{{ $resource }}</li>
+            @foreach($resources as $resource)
+                <li class="font-semibold mt-2">
+                    <a href="{{ route('moon.resources.index', $resource['slug']) }}" class="outline-none">
+                        {{ $resource['name_plural'] }}
+                    </a>
+                </li>
             @endforeach
         </ul>
     </div>
