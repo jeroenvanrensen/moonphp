@@ -15,7 +15,7 @@ trait ResourceHelpers
     {
         $resources = [];
 
-        foreach (config('moonphp.resources') as $resource) {
+        foreach (config('moonphp.resources', []) as $resource) {
             if (!is_object($resource)) {
                 $resource = new $resource();
             }
