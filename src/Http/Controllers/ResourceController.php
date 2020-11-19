@@ -16,6 +16,7 @@ class ResourceController
         $rows = $model::all();
 
         return view('moon::resources.index', [
+            'columns' => $resource->columns(),
             'rows' => $rows,
             'title' => Str::of($resource->name())->plural()
         ]);

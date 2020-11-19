@@ -47,4 +47,38 @@ class ResourceIndexTest extends TestCase
         $this->get(route('moon.resources.index', 'pages')) // "pages" does not exist
             ->assertStatus(404);
     }
+
+    /** @test */
+    public function all_the_column_labels_are_shown_on_the_index_page()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = User::factory()->create();
+        auth()->guard('moon')->login($user);
+        
+        $this->setUpResources(true, '
+            Column::name("Title")->make()
+        ');
+
+        $this->get(route('moon.resources.index', 'posts'))
+            ->assertSee('Title');
+    }
+
+    /** @test */
+    public function all_the_columns_are_shown_for_each_row()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = User::factory()->create();
+        auth()->guard('moon')->login($user);
+        
+        $this->setUpResources(true, '
+            Column::name("Title")->make()
+        ');
+
+        $post = \App\Models\Post::factory()->create();
+
+        $this->get(route('moon.resources.index', 'posts'))
+            ->assertSee($post->title);
+    }
 }
