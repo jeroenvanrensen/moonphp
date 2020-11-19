@@ -13,8 +13,30 @@ trait SetUpResources
      *
      * @return void
      */
-    protected function setUpResources($registerResources = false)
+    protected function setUpResources(bool $registerResources = false, string $columns = '')
     {
+        $resource = <<<EOD
+        <?php
+        
+        namespace App\Resources;
+        
+        use App\Models\Post as PostModel;
+        use JeroenvanRensen\MoonPHP\Resource;
+        use JeroenvanRensen\MoonPHP\Column;
+        
+        class Post extends Resource
+        {
+            public \$model = PostModel::class;
+        
+            public function columns()
+            {
+                return [
+                    $columns
+                ];
+            }
+        }
+        EOD;
+
         // Set up configuration
         Config::set('filesystems.disks.local.root', app_path());
         Config::set('filesystems.disks.database', [
@@ -24,7 +46,7 @@ trait SetUpResources
 
         // Save the files
         Storage::disk('local')->put('Models/Post.php', $this->model);
-        Storage::disk('local')->put('Resources/Post.php', $this->resource);
+        Storage::disk('local')->put('Resources/Post.php', $resource);
         Storage::disk('database')->put('factories/PostFactory.php', $this->factory);
 
         // Include the files
@@ -33,14 +55,14 @@ trait SetUpResources
         require_once database_path('factories/PostFactory.php');
 
         // Build up the table
-        Schema::create('posts', function($table) {
+        Schema::create('posts', function ($table) {
             $table->id();
             $table->string('title');
             $table->text('body');
             $table->timestamps();
         });
 
-        if(!$registerResources) {
+        if (!$registerResources) {
             return;
         }
 
@@ -60,20 +82,6 @@ trait SetUpResources
     class Post extends Model
     {
         use HasFactory;
-    }
-    EOD;
-
-    public $resource = <<<EOD
-    <?php
-    
-    namespace App\Resources;
-    
-    use JeroenvanRensen\MoonPHP\Resource;
-    use App\Models\Post as PostModel;
-    
-    class Post extends Resource
-    {
-        public \$model = PostModel::class;
     }
     EOD;
 

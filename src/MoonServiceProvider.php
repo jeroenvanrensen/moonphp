@@ -11,12 +11,15 @@ use JeroenvanRensen\MoonPHP\Console\CreateUserCommand;
 use JeroenvanRensen\MoonPHP\Http\Middleware\AuthMiddleware;
 use JeroenvanRensen\MoonPHP\Http\Middleware\GuestMiddleware;
 use JeroenvanRensen\MoonPHP\Models\User;
+use JeroenvanRensen\MoonPHP\Resources\Column;
 
 class MoonServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        // 
+        $this->app->bind('column', function($app) {
+            return new Column();
+        });
     }
 
     public function boot()
