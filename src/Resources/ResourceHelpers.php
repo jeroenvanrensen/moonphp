@@ -44,10 +44,14 @@ trait ResourceHelpers
     {
         $resources = SELF::getResourcesList();
 
-        $resource = array_filter($resources, function($item) use ($slug) {
+        $resourceArray = array_filter($resources, function($item) use ($slug) {
             return $item['slug'] == $slug;
-        })[0];
+        });
 
-        return new $resource['class']();
+        if(count($resourceArray) == 0) {
+            abort(404);
+        }
+
+        return new $resourceArray[0]['class']();
     }
 }

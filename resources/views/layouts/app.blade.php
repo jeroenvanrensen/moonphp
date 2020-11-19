@@ -14,6 +14,10 @@
 
         <main class="w-5/6">
             @include('moon::layouts._navbar')
+
+            <div class="container mx-auto px-6 py-4 xl:pt-12">
+                @yield('content')
+            </div>
         </main>
     </div>
 

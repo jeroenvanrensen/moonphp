@@ -20,17 +20,10 @@ class ResourceHelpersTest extends TestCase
         $this->setUpResources();
 
         Config::set('moonphp.resources', [
-            \App\Resources\Page::class,
             \App\Resources\Post::class
         ]);
 
         $this->assertEquals([
-            [
-                'name' => 'Page',
-                'name_plural' => 'Pages',
-                'slug' => 'pages',
-                'class' => new \App\Resources\Page()
-            ],
             [
                 'name' => 'Post',
                 'name_plural' => 'Posts',
