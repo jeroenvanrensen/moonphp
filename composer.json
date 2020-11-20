@@ -11,7 +11,13 @@
             "role": "Developer"
         }
     ],
-    "require": {},
+    "require": {
+        "livewire/livewire": "^2.3"
+    },
+    "require-dev": {
+        "orchestra/testbench": "6.0",
+        "phpunit/phpunit": "^9.4"
+    },
     "autoload": {
         "psr-4": {
             "JeroenvanRensen\\MoonPHP\\": "src",
@@ -22,10 +28,6 @@
         "psr-4": {
             "JeroenvanRensen\\MoonPHP\\Tests\\": "tests"
         }
-    },
-    "require-dev": {
-        "orchestra/testbench": "6.0",
-        "phpunit/phpunit": "^9.4"
     },
     "extra": {
         "laravel": {
