@@ -3,6 +3,7 @@
 namespace JeroenvanRensen\MoonPHP\Tests;
 
 use JeroenvanRensen\MoonPHP\MoonServiceProvider;
+use Livewire\LivewireServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -15,6 +16,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     {
         return [
             MoonServiceProvider::class,
+            LivewireServiceProvider::class
         ];
     }
 

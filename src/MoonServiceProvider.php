@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use JeroenvanRensen\MoonPHP\Console\CreateUserCommand;
+use JeroenvanRensen\MoonPHP\Http\Livewire\Auth\Login;
 use JeroenvanRensen\MoonPHP\Http\Middleware\AuthMiddleware;
 use JeroenvanRensen\MoonPHP\Http\Middleware\GuestMiddleware;
 use JeroenvanRensen\MoonPHP\Models\User;
 use JeroenvanRensen\MoonPHP\Resources\Column;
+use Livewire\Livewire;
 
 class MoonServiceProvider extends ServiceProvider
 {
@@ -41,6 +43,9 @@ class MoonServiceProvider extends ServiceProvider
 
         // Register middleware
         $this->registerMiddleware();
+        
+        // Register all the Livewire components
+        $this->registerLivewire();
     }
 
     /**
@@ -133,5 +138,15 @@ class MoonServiceProvider extends ServiceProvider
         $this->commands([
             CreateUserCommand::class,
         ]);
+    }
+
+    /**
+     * Register all the Livewire components.
+     *
+     * @return void
+     */
+    protected function registerLivewire()
+    {
+        Livewire::component('auth.login', Login::class);
     }
 }
