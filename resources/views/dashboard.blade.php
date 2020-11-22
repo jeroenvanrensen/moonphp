@@ -1,3 +1,1 @@
-@extends('moon::layouts.app')
-
-@section('title', 'Dashboard')
+<h1 class="mb-6 text-3xl font-semibold">Dashboard</h1>
