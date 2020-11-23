@@ -16,7 +16,7 @@ class ResourceIndexTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->setUpResources(true);
+        $this->setUpResources(true, true);
 
         $user = User::factory()->create();
         auth()->guard('moon')->login($user);
@@ -30,7 +30,7 @@ class ResourceIndexTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->setUpResources(true);
+        $this->setUpResources(true, true);
 
         $this->get(route('moon.resources.index', 'posts'))
             ->assertRedirect(route('moon.auth.login'));
@@ -39,7 +39,7 @@ class ResourceIndexTest extends TestCase
     /** @test */
     public function an_error_is_thrown_when_the_resource_slug_does_not_exist()
     {
-        $this->setUpResources(true);
+        $this->setUpResources(true, true);
 
         $user = User::factory()->create();
         auth()->guard('moon')->login($user);

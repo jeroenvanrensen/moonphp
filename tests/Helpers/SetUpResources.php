@@ -13,29 +13,51 @@ trait SetUpResources
      *
      * @return void
      */
-    protected function setUpResources(bool $registerResources = false, string $columns = '')
+    protected function setUpResources($registerResources = false, $setColumns = false)
     {
-        $resource = <<<EOD
-        <?php
-        
-        namespace App\Resources;
-        
-        use App\Models\Post as PostModel;
-        use JeroenvanRensen\MoonPHP\Resource;
-        use JeroenvanRensen\MoonPHP\Column;
-        
-        class Post extends Resource
-        {
-            public \$model = PostModel::class;
-        
-            public function columns()
+        if($setColumns) {
+            $resource = <<<EOD
+            <?php
+            
+            namespace App\Resources;
+            
+            use App\Models\Post as PostModel;
+            use JeroenvanRensen\MoonPHP\Resource;
+            use JeroenvanRensen\MoonPHP\Column;
+            
+            class Post extends Resource
             {
-                return [
-                    $columns
-                ];
+                public \$model = PostModel::class;
+            
+                public function columns()
+                {
+                    return [
+                        Column::name('Title')->make()
+                    ];
+                }
             }
+            EOD;
+        } else {
+            $resource = <<<EOD
+            <?php
+            
+            namespace App\Resources;
+            
+            use App\Models\Post as PostModel;
+            use JeroenvanRensen\MoonPHP\Resource;
+            use JeroenvanRensen\MoonPHP\Column;
+            
+            class Post extends Resource
+            {
+                public \$model = PostModel::class;
+            
+                public function columns()
+                {
+                    return \$this->columns;
+                }
+            }
+            EOD;
         }
-        EOD;
 
         // Set up configuration
         Config::set('filesystems.disks.local.root', app_path());
@@ -71,7 +93,7 @@ trait SetUpResources
         ]);
     }
 
-    public $model = <<<EOD
+    private $model = <<<EOD
     <?php
     
     namespace App\Models;
@@ -85,7 +107,7 @@ trait SetUpResources
     }
     EOD;
 
-    public $factory = <<<EOD
+    private $factory = <<<EOD
     <?php
     
     namespace Database\Factories;

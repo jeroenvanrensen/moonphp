@@ -14,7 +14,7 @@ class LogoutTest extends TestCase
     public function a_user_can_logout()
     {
         $this->withoutExceptionHandling();
-        
+
         $this->login();
 
         $this->assertTrue(auth()->guard('moon')->check());
@@ -30,7 +30,7 @@ class LogoutTest extends TestCase
     public function guests_cannot_logout()
     {
         $this->withoutExceptionHandling();
-        
+
         $this->post(route('moon.auth.logout'))
             ->assertRedirect(route('moon.auth.login'))
             ->assertSessionMissing('message', 'You are successfully logged out!');
@@ -48,10 +48,7 @@ class LogoutTest extends TestCase
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' // password
         ]);
 
-        $this->post(route('moon.auth.login'), [
-            'email' => 'john@example.org',
-            'password' => 'password'
-        ]);
+        auth()->guard('moon')->login($user);
 
         return $user;
     }
